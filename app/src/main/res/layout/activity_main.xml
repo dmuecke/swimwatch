@@ -2,41 +2,14 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:paddingBottom="@dimen/activity_vertical_margin"
                 tools:context=".MainActivity"
                 android:orientation="vertical">
 
-    <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="+"
-            android:id="@+id/add_swimmer"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="15X25F@0:40"
-            android:id="@+id/swim_set"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:textSize="30dp"
-            android:textIsSelectable="true"/>
-
-
-    </RelativeLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp"
+        android:layout_weight="6">
 
         <ListView
             android:layout_width="match_parent"
@@ -44,8 +17,43 @@
             android:id="@+id/list_swimmer"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:scrollingCache="true" />
+            android:scrollingCache="false" />
 
     </LinearLayout>
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageBtnAddPerson"
+            android:src="@mipmap/ic_person_add_black_48dp"
+            android:layout_alignParentLeft="false"
+            android:layout_alignParentTop="false"
+            android:layout_alignParentBottom="false"
+            android:layout_centerVertical="true" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButtonTimer"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/ic_timer_off_black_48dp"
+            android:layout_toEndOf="@+id/imageBtnAddPerson" />
+
+        <TextClock
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:id="@+id/textClock"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:format24Hour="kk:mm:ss"
+            android:format12Hour="hh:mm:ss" />
+
+
+    </RelativeLayout>
 </LinearLayout>

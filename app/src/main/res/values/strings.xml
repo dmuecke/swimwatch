@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">SwimWatch</string>
 
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="plus_swimmer">+</string>
+    <string name="last">Last:</string>
+    <string name="time">Time:</string>
+    <string name="round">Round:</string>
 </resources>
