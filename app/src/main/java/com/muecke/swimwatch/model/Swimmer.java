@@ -6,9 +6,14 @@ public class Swimmer implements Serializable {
 
 
     private  SwimmingStatus status;
+    private  StopWatch watch;
+    private  StopWatch pause;
+
+
+    private  int round;
 
     public Swimmer() {
-        status = SwimmingStatus.INACTIVE;
+        reset();
     }
 
     public SwimmingStatus getStatus() {
@@ -17,6 +22,33 @@ public class Swimmer implements Serializable {
 
     public void changeSwimmingStatus() {
         status = status == SwimmingStatus.ACTIVE ? SwimmingStatus.INACTIVE : SwimmingStatus.ACTIVE;
+        if (status.equals(SwimmingStatus.ACTIVE)) {
+            watch = StopWatch.start("Swimmer");
+            pause = StopWatch.getNullStopWatch();
+
+            round = round + 1;
+        } else {
+            pause = StopWatch.start("Swimmer");
+            watch.stopAndLog("StopWatch");
+        }
     }
 
+    public String getElapsedTime() {
+        return watch.getElaspedTime();
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public String getPauseTime() {
+        return pause.getElaspedTime();
+    }
+
+    public void reset() {
+        status = SwimmingStatus.INACTIVE;
+        round = 0;
+        watch = StopWatch.getNullStopWatch();
+        pause = StopWatch.getNullStopWatch();
+    }
 }

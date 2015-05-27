@@ -1,25 +1,27 @@
 package com.muecke.swimwatch.adapter;
 
 import android.view.View;
+import android.widget.AdapterView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompositeOnClickListener implements View.OnClickListener{
-    List<View.OnClickListener> listeners;
+public class CompositeOnClickListener implements AdapterView.OnItemClickListener {
+    List<AdapterView.OnItemClickListener> listeners;
 
     public CompositeOnClickListener(){
-        listeners = new ArrayList<View.OnClickListener>();
+        listeners = new ArrayList<AdapterView.OnItemClickListener>();
     }
 
-    public void addOnClickListener(View.OnClickListener listener){
+    public void addOnClickListener(AdapterView.OnItemClickListener listener){
         listeners.add(listener);
     }
 
+
     @Override
-    public void onClick(View v){
-        for(View.OnClickListener listener : listeners){
-            listener.onClick(v);
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        for(AdapterView.OnItemClickListener listener : listeners){
+            listener.onItemClick(parent,view,position,id);
         }
     }
 }
