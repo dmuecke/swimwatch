@@ -1,11 +1,13 @@
 package com.muecke.swimwatch;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
@@ -76,6 +78,26 @@ public class MainActivity extends Activity  {
 
                     handler.sendEmptyMessage(START_TIMER);
                 }
+            }
+        });
+
+        viewSwimmers.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Swimmer swimmer = (Swimmer) parent.getItemAtPosition(position);
+
+                if (swimmer.getStatus().equals(SwimmingStatus.INACTIVE) &&
+                        !handler.hasMessages(UPDATE_TIMER)) {
+                    AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
+                            .setTitle("Threshold")
+                            .setMessage("Test")
+                            .setPositiveButton("Ok", null).show();
+                    WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+                    lp.alpha=0.5f;
+                    dialog.getWindow().setAttributes(lp);
+                }
+
+                return true;
             }
         });
 

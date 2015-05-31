@@ -18,15 +18,12 @@ package com.muecke.swimwatch.model;
 
 import android.util.Log;
 
-import java.util.ArrayList;
-
 /**
  * A {@link StopWatch} records start, laps and stop, and print them to logcat.
  */
 public class StopWatch {
     private long start;
     private long stop;
-    private final ArrayList<Long> mTimes = new ArrayList<>();
 
     private StopWatch(long startTime) {
         stop=-1;
@@ -40,12 +37,6 @@ public class StopWatch {
         return new StopWatch(System.currentTimeMillis());
     }
 
-    /**
-     * Record a lap.
-     */
-    public void lap(long lapTime) {
-        mTimes.add(lapTime);
-    }
 
     public Long getElapsedTime() {
 
@@ -66,9 +57,7 @@ public class StopWatch {
     public void stopAndLog(String TAG) {
         this.stop = System.currentTimeMillis();
 
-        final long total = stop - start;
-        lap(total);
-        Log.d(TAG, "" + total);
+        Log.d(TAG, getElaspedTime());
     }
 
     /**
@@ -83,10 +72,7 @@ public class StopWatch {
         public NullStopWatch() {
             super(System.currentTimeMillis());
         }
-        @Override
-        public void lap(long lapTime) {
-            // noop
-        }
+
         @Override
         public void stopAndLog(String TAG) {
             // noop

@@ -1,6 +1,8 @@
 package com.muecke.swimwatch.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Swimmer implements Serializable {
 
@@ -8,7 +10,7 @@ public class Swimmer implements Serializable {
     private  SwimmingStatus status;
     private  StopWatch watch;
     private  StopWatch pause;
-
+    private List<Long> lap = new ArrayList<>();
 
     private  int round;
 
@@ -29,8 +31,20 @@ public class Swimmer implements Serializable {
             round = round + 1;
         } else {
             pause = StopWatch.start();
-            watch.stopAndLog("StopWatch");
+            watch.stopAndLog("Swimmer");
+            lap.add(watch.getElapsedTime());
         }
+    }
+
+    public List<Long> getLap() {
+        return lap;
+    }
+
+    public String formatTime(Long time) {
+        int swimTime = (int) (time/100);
+        int totmin = swimTime / 600;
+        int totsec = swimTime % 600;
+        return String.format("%02d:%02d,%d", totmin, totsec/10, totsec%10);
     }
 
     public String getElapsedTime() {
@@ -48,6 +62,7 @@ public class Swimmer implements Serializable {
     public void reset() {
         status = SwimmingStatus.INACTIVE;
         round = 0;
+        lap.clear();
         watch = StopWatch.getNullStopWatch();
         pause = StopWatch.getNullStopWatch();
     }
