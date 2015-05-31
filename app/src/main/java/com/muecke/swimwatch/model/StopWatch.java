@@ -24,40 +24,33 @@ import java.util.ArrayList;
  * A {@link StopWatch} records start, laps and stop, and print them to logcat.
  */
 public class StopWatch {
-    private final String mLabel;
-    private boolean stop;
+    private long start;
+    private long stop;
     private final ArrayList<Long> mTimes = new ArrayList<>();
-    private final ArrayList<String> mLapLabels = new ArrayList<>();
 
-    private StopWatch(String label) {
-        mLabel = label;
-        stop=false;
-        lap("");
+    private StopWatch(long startTime) {
+        stop=-1;
+        start=startTime;
     }
 
     /**
      * Create a new instance and start it.
      */
-    public static StopWatch start(String label) {
-        return new StopWatch(label);
+    public static StopWatch start() {
+        return new StopWatch(System.currentTimeMillis());
     }
 
     /**
      * Record a lap.
      */
-    public void lap(String lapLabel) {
-        mTimes.add(System.currentTimeMillis());
-        mLapLabels.add(lapLabel);
+    public void lap(long lapTime) {
+        mTimes.add(lapTime);
     }
 
     public Long getElapsedTime() {
-        if (stop) {
-            final long start = mTimes.get(0);
-            final long stop = mTimes.get(mTimes.size() - 1);
-            return stop - start;
-        } else {
-            return System.currentTimeMillis() - mTimes.get(0);
-        }
+
+        long currentTimeMillis = stop > 0 ? stop : System.currentTimeMillis();
+        return currentTimeMillis - start;
     }
 
     public String getElaspedTime() {
@@ -71,28 +64,11 @@ public class StopWatch {
      * Stop it and log the result, if the total time >= {@code timeThresholdToLog}.
      */
     public void stopAndLog(String TAG) {
-        lap("Stop");
-        this.stop = true;
+        this.stop = System.currentTimeMillis();
 
-        final long start = mTimes.get(0);
-        final long stop = mTimes.get(mTimes.size() - 1);
         final long total = stop - start;
-
-        final StringBuilder sb = new StringBuilder();
-        sb.append(mLabel);
-        sb.append(",");
-        sb.append(total);
-        sb.append(": ");
-        long last = start;
-        for (int i = 1; i < mTimes.size(); i++) {
-            final long current = mTimes.get(i);
-            sb.append(mLapLabels.get(i));
-            sb.append(",");
-            sb.append((current - last));
-            sb.append(" ");
-            last = current;
-        }
-        Log.v(TAG, sb.toString());
+        lap(total);
+        Log.d(TAG, "" + total);
     }
 
     /**
@@ -105,10 +81,10 @@ public class StopWatch {
     private static class NullStopWatch extends StopWatch {
         public static final NullStopWatch INSTANCE = new NullStopWatch();
         public NullStopWatch() {
-            super(null);
+            super(System.currentTimeMillis());
         }
         @Override
-        public void lap(String lapLabel) {
+        public void lap(long lapTime) {
             // noop
         }
         @Override

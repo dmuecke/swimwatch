@@ -23,12 +23,12 @@ public class Swimmer implements Serializable {
     public void changeSwimmingStatus() {
         status = status == SwimmingStatus.ACTIVE ? SwimmingStatus.INACTIVE : SwimmingStatus.ACTIVE;
         if (status.equals(SwimmingStatus.ACTIVE)) {
-            watch = StopWatch.start("Swimmer");
+            watch = StopWatch.start();
             pause = StopWatch.getNullStopWatch();
 
             round = round + 1;
         } else {
-            pause = StopWatch.start("Swimmer");
+            pause = StopWatch.start();
             watch.stopAndLog("StopWatch");
         }
     }
