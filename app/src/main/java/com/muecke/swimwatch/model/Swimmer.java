@@ -66,4 +66,13 @@ public class Swimmer implements Serializable {
         watch = StopWatch.getNullStopWatch();
         pause = StopWatch.getNullStopWatch();
     }
+
+    public String[] getTimes() {
+        List<String> swimTime = new ArrayList<>();
+        for (Long lapTime : lap) {
+            swimTime.add(formatTime(lapTime));
+        }
+
+        return swimTime.toArray(new String[swimTime.size()]);
+    }
 }

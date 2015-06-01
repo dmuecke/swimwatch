@@ -89,8 +89,8 @@ public class MainActivity extends Activity  {
                 if (swimmer.getStatus().equals(SwimmingStatus.INACTIVE) &&
                         !handler.hasMessages(UPDATE_TIMER)) {
                     AlertDialog dialog = new AlertDialog.Builder(MainActivity.this)
-                            .setTitle("Threshold")
-                            .setMessage("Test")
+                            .setTitle("Lap Times")
+                            .setItems(swimmer.getTimes(), null)
                             .setPositiveButton("Ok", null).show();
                     WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
                     lp.alpha=0.5f;
